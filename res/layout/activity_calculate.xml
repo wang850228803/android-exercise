@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.myapp.Calculate$PlaceholderFragment" >
+
+    <EditText
+        android:id="@+id/etext"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:background="#666666" />
+
+    <RelativeLayout 
+        android:id="@+id/oprate"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:layout_below="@id/etext">
+        
+        <Button 
+            android:id="@+id/plus"
+            android:layout_width="wrap_content"
+    		android:layout_height="fill_parent"
+    		android:text="+"  />
+        
+        <Button 
+            android:id="@+id/minus"
+            android:layout_width="wrap_content"
+    		android:layout_height="fill_parent"
+    		android:layout_toRightOf="@id/plus"
+    		android:text="—"  />
+        
+        <Button 
+            android:id="@+id/mul"
+            android:layout_width="wrap_content"
+    		android:layout_height="fill_parent"
+    		android:layout_toRightOf="@id/minus"
+    		android:text="*"  />
+        
+        <Button 
+            android:id="@+id/div"
+            android:layout_width="wrap_content"
+    		android:layout_height="fill_parent"
+    		android:layout_toRightOf="@id/mul"
+    		android:text="/"  />
+    		
+     </RelativeLayout>
+     
+    <Button
+        android:id="@+id/equal"
+        android:layout_width="100dip"
+    	android:layout_height="50dip"
+    	android:layout_below="@id/oprate"
+    	android:text="equ" />
+    
+</RelativeLayout>

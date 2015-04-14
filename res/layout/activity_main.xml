@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button android:id="@+id/cal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="calculate"
+        />
+   
+    <Button android:id="@+id/play"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="play music"
+        />
+    <Button android:id="@+id/aidl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="aidl test"
+        />
+    <Button android:id="@+id/receiver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="test receiver"
+        />       
+</LinearLayout>

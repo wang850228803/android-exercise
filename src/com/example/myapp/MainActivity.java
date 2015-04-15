@@ -10,9 +10,11 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.advanced.AidlTest;
+import com.example.advanced.FragmentTest;
+import com.example.advanced.MutilTouchDemoActivity;
+import com.example.advanced.TestActivity;
 import com.example.myapp.PlayService.LocalBinder;
 
 public class MainActivity extends Activity implements View.OnClickListener {
@@ -34,6 +36,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
         aidlBtn.setOnClickListener(this);
         Button receiverBtn = (Button) findViewById(R.id.receiver);
         receiverBtn.setOnClickListener(this);
+        Button fraBtn = (Button) findViewById(R.id.frag);
+        fraBtn.setOnClickListener(this);
+        Button scrollBtn = (Button) findViewById(R.id.scrollview);
+        scrollBtn.setOnClickListener(this);
+        Button mtBtn = (Button) findViewById(R.id.multitouch);
+        mtBtn.setOnClickListener(this);
+        Button alBtn = (Button) findViewById(R.id.applist);
+        alBtn.setOnClickListener(this);
+        Button loaderBtn = (Button) findViewById(R.id.loader);
+        loaderBtn.setOnClickListener(this);
         intent = new Intent();
     }
 
@@ -45,6 +57,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 intent.setClass(MainActivity.this, Calculate.class);
                 startActivity(intent);
                 break;
+                //localbinder service
             case R.id.play:
                 if (playBtn.getText().equals("play music")){
                     playBtn.setText("stop music");
@@ -59,10 +72,33 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.aidl:
                 intent.setClass(MainActivity.this, AidlTest.class);
                 startActivity(intent);
+                break;
             case R.id.receiver:
                 intent.setAction("com.example.action.MY_RECEIVER");
                 sendBroadcast(intent);
                 break;
+            case R.id.frag:
+                intent.setClass(MainActivity.this, FragmentTest.class);
+                startActivity(intent);
+                break;
+            case R.id.scrollview:
+                intent.setClass(MainActivity.this, TestActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.multitouch:
+                intent.setClass(MainActivity.this, MutilTouchDemoActivity.class);
+                startActivity(intent);
+                break;
+                //loader sample
+            case R.id.applist:
+                intent.setClass(MainActivity.this, ContactSampleListActivity.class);
+                startActivity(intent);
+                break;
+                //provider loader
+            case R.id.loader:
+                intent.setClass(MainActivity.this, LoaderThrottle.class);
+                startActivity(intent);
+                break;            
             default:
                 break;
         }
@@ -84,18 +120,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if (mBound) {
             unbindService(mConnection);
             mBound = false;
-        }
-    }
-
-    /** Called when a button is clicked (the button in the layout file attaches to
-      * this method with the android:onClick attribute) */
-    public void onButtonClick(View v) {
-        if (mBound) {
-            // Call a method from the LocalService.
-            // However, if this call were something that might hang, then this request should
-            // occur in a separate thread to avoid slowing down the activity performance.
-            int num = mService.getRandomNumber();
-            Toast.makeText(this, "number: " + num, Toast.LENGTH_SHORT).show();
         }
     }
 

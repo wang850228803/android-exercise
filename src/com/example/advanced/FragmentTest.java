@@ -19,6 +19,7 @@ public class FragmentTest extends Activity implements onItemClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_test);
+        //????????????????????
         //contentFrag=(ContentFragment)getFragmentManager().findFragmentById(R.id.content_fragment);
         if(contentFrag!=null) mDual=true;
     }

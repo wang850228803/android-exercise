@@ -49,5 +49,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="loader"
-        />                   
+        />
+    <Button android:id="@+id/handler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="handler"
+        />
 </LinearLayout>

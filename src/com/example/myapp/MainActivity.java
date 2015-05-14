@@ -7,9 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.advanced.AidlTest;
 import com.example.advanced.FragmentTest;
@@ -23,6 +27,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     PlayService mService;
     boolean mBound = false;
     Button playBtn;
+    Button handlerBtn;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         alBtn.setOnClickListener(this);
         Button loaderBtn = (Button) findViewById(R.id.loader);
         loaderBtn.setOnClickListener(this);
+        handlerBtn = (Button) findViewById(R.id.handler);
+        handlerBtn.setOnClickListener(this);
         intent = new Intent();
     }
 
@@ -98,7 +105,20 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.loader:
                 intent.setClass(MainActivity.this, LoaderThrottle.class);
                 startActivity(intent);
-                break;            
+                break;
+            case R.id.handler:
+                TestHandler mHandler = new TestHandler();
+                Log.i("myapp", "BeforeSendMessage");
+                mHandler.sendEmptyMessage(TestHandler.COUNT);
+                Log.i("myapp", "AfterSendMessage");
+                try {
+                    synchronized (Thread.currentThread()) {
+                        Thread.currentThread().wait(5000);
+                      }
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             default:
                 break;
         }
@@ -140,4 +160,34 @@ public class MainActivity extends Activity implements View.OnClickListener {
             mBound = false;
         }
     };
+    
+    private class TestHandler extends Handler {
+        
+        private static final int COUNT = 0;
+        private static final int STOP_COUNT = 1;
+        int count = 0;
+
+        @Override
+        public void handleMessage(Message msg) {
+            // TODO Auto-generated method stub
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case COUNT:
+                    if (count < 10){
+                        Log.i("myapp", "in the message");
+                        count++;
+                        Toast.makeText(MainActivity.this, "count："+ count, Toast.LENGTH_SHORT).show();
+                        sendEmptyMessageDelayed(TestHandler.COUNT,4000);
+                    } else {
+                        sendEmptyMessage(TestHandler.STOP_COUNT);
+
+                    }
+                    break;
+                default:
+                    break;
+                    
+            }
+        }
+        
+    }
 }

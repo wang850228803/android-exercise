@@ -4,55 +4,76 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Button android:id="@+id/cal"
+    <Button
+        android:id="@+id/cal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="calculate"
-        />
-   
-    <Button android:id="@+id/play"
+        android:text="calculate" />
+
+    <Button
+        android:id="@+id/play"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="play music"
-        />
-    <Button android:id="@+id/aidl"
+        android:text="play music" />
+
+    <Button
+        android:id="@+id/aidl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="aidl test"
-        />
-    <Button android:id="@+id/receiver"
+        android:text="aidl test" />
+
+    <Button
+        android:id="@+id/receiver"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="test receiver"
-        />
-    <Button android:id="@+id/frag"
+        android:text="test receiver" />
+
+    <Button
+        android:id="@+id/frag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="fragment test"
-        />   
-    <Button android:id="@+id/scrollview"
+        android:text="fragment test" />
+
+    <Button
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="scrollview"
-        />      
-    <Button android:id="@+id/multitouch"
+        android:text="scrollview" />
+
+    <Button
+        android:id="@+id/multitouch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="multitouch"
-        />
-    <Button android:id="@+id/applist"
+        android:text="multitouch" />
+
+    <Button
+        android:id="@+id/applist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="applist"
-        />
-    <Button android:id="@+id/loader"
+        android:text="applist" />
+
+    <Button
+        android:id="@+id/loader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="loader"
-        />
-    <Button android:id="@+id/handler"
+        android:text="loader" />
+
+    <Button
+        android:id="@+id/handler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="handler"
-        />
+        android:text="handler" />
+
+    <Button
+        android:id="@+id/threadHandler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="threadHandler" />
+
+    <Button
+        android:id="@+id/handlerthread"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="handlerthread" />
+
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -63,6 +64,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         Button handlerthreadBtn = (Button) findViewById(R.id.handlerthread);
         handlerthreadBtn.setOnClickListener(this);
         intent = new Intent();
+        LocationManager locationManager=(LocationManager) this.getSystemService(Context.LOCATION_SERVICE); 
+        //判断GPS模块是否开启，如果没有则开启 
+        if(!locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) 
+            Toast.makeText(this, "GPS is not open,Please open it!", Toast.LENGTH_SHORT).show(); 
     }
 
     @Override

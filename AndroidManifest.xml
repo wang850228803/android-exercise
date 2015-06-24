@@ -5,10 +5,12 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="14"
         android:targetSdkVersion="19" />
     
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="test.permission"/>
+    <permission android:name="test.permission"/>
 
     <application
         android:allowBackup="true"
@@ -44,16 +46,16 @@
             android:name="com.example.myapp.PlayService"></service>
         <service
             android:name="com.example.advanced.Delay"></service>
-        <receiver 
+        <!-- <receiver 
             android:name="com.example.myapp.MyReceiver">
             <intent-filter >
                 <action android:name="com.example.action.MY_RECEIVER" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </receiver>
+        </receiver> -->
         <provider 
             android:name="com.example.myapp.SimpleProvider"
             android:authorities="com.example.android.apis.app.test"></provider>
     </application>
-
+    
 </manifest>

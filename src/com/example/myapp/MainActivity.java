@@ -1,9 +1,6 @@
 
 package com.example.myapp;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.ListActivity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -11,16 +8,19 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.location.LocationManager;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Message;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -32,6 +32,7 @@ import com.example.advanced.FragmentTest;
 import com.example.advanced.MutilTouchDemoActivity;
 import com.example.advanced.TestActivity;
 import com.example.myapp.PlayService.LocalBinder;
+import com.example.update.SystemUpdateActivity;
 
 public class MainActivity extends ListActivity{
 
@@ -69,6 +70,19 @@ public class MainActivity extends ListActivity{
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.example.action.MY_RECEIVER");
         mContext.registerReceiver(mReceiver,intentFilter);
+        Button test = (Button)findViewById(R.id.test);
+        test.setOnLongClickListener(new OnLongClickListener(){
+
+            @Override
+            public boolean onLongClick(View v) {
+                // TODO Auto-generated method stub
+                Toast.makeText(MainActivity.this, "test", Toast.LENGTH_LONG).show();
+                return false;
+            }
+            
+        });
+        test.setClickable(false);
+        //test.setEnabled(false);
     }
 
 
@@ -178,7 +192,7 @@ public class MainActivity extends ListActivity{
 
     public class MyAdapter extends BaseAdapter{
         String[] array = {"calculate", "play music", "aidl test", "test receiver", "fragment test", "scrollview", 
-                "multitouch", "applist", "loader", "handler", "threadHandler", "handlerthread"}; 
+                "multitouch", "applist", "loader", "handler", "threadHandler", "handlerthread", "disableConnect","OTA"}; 
 
         @Override
         public int getCount() {
@@ -251,9 +265,9 @@ public class MainActivity extends ListActivity{
                     break;
                 case 3:
                     intent.setAction("com.example.action.MY_RECEIVER");
-                    sendBroadcast(intent,"test.permission");
+                    //sendBroadcast(intent,"test.permission");
                     //sendBroadcast(intent,android.Manifest.permission.WRITE_SECURE_SETTINGS);
-                    //sendBroadcast(intent);
+                    sendBroadcast(intent);
                     break;
                 case 4:
                     intent.setClass(MainActivity.this, FragmentTest.class);
@@ -320,6 +334,18 @@ public class MainActivity extends ListActivity{
 
                     };
                     handler.obtainMessage(WAIT).sendToTarget();
+                    break;
+                case 12:
+                    WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
+                    //wifiManager.disconnect();
+                    wifiManager.disableNetwork(wifiManager.getConnectionInfo().getNetworkId());
+                    int test = Settings.Global.getInt(getContentResolver(), Settings.Global.AIRPLANE_MODE_ON,1);
+                    Log.i("test", test+"");
+                    int loc = Settings.Secure.getInt(getContentResolver(), Settings.Secure.LOCATION_MODE, 0);
+                    Toast.makeText(mContext, "location="+loc, Toast.LENGTH_LONG).show();
+                    break;
+                case 13:
+                    startActivity(new Intent(MainActivity.this, SystemUpdateActivity.class));
                     break;
                 default:
                     break;

@@ -54,6 +54,7 @@
         android:layout_width="100dip"
     	android:layout_height="50dip"
     	android:layout_below="@id/oprate"
+    	android:onClick="equal"
     	android:text="equ" />
     
 </RelativeLayout>

@@ -39,8 +39,8 @@ public class Calculate extends Activity implements OnClickListener {
         muBtn.setOnClickListener(this);
         dBtn=(Button)findViewById(R.id.div);    
         dBtn.setOnClickListener(this);
-        equal=(Button)findViewById(R.id.equal);
-        equal.setOnClickListener(this);
+        /*equal=(Button)findViewById(R.id.equal);
+        equal.setOnClickListener(this);*/
     }
 
     public void onClick(View v){
@@ -61,16 +61,23 @@ public class Calculate extends Activity implements OnClickListener {
                 eText.setText(eText.getText().append("/"));
                 locateCursor();
                 break;
-            case R.id.equal:
+            /*case R.id.equal:
                 String res=computeStirngNoBracket(eText.getText().toString());
                 eText.setText(res);
                 locateCursor();
                 Intent intent=new Intent(ACTION);
                 sendBroadcast(intent);
+                break;*/
+            default:
                 break;
         }
     }
     
+    public void equal(View v) {
+        String res=computeStirngNoBracket(eText.getText().toString());
+        eText.setText(res);
+    }
+   
     private void locateCursor(){
         CharSequence text = eText.getText();
         if (text instanceof Spannable) {

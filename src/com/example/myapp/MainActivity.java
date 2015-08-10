@@ -5,7 +5,6 @@ import android.app.ListActivity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.location.LocationManager;
 import android.net.wifi.WifiManager;
@@ -14,11 +13,11 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Message;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -66,10 +65,10 @@ public class MainActivity extends ListActivity{
         if(!locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) 
             Toast.makeText(this, "GPS is not open,Please open it!", Toast.LENGTH_SHORT).show(); 
         
-        MyReceiver mReceiver = new MyReceiver();
+        /*MyReceiver mReceiver = new MyReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.example.action.MY_RECEIVER");
-        mContext.registerReceiver(mReceiver,intentFilter);
+        mContext.registerReceiver(mReceiver,intentFilter);*/
         Button test = (Button)findViewById(R.id.test);
         test.setOnLongClickListener(new OnLongClickListener(){
 
@@ -268,6 +267,7 @@ public class MainActivity extends ListActivity{
                     //sendBroadcast(intent,"test.permission");
                     //sendBroadcast(intent,android.Manifest.permission.WRITE_SECURE_SETTINGS);
                     sendBroadcast(intent);
+                    //sendBroadcastAsUser(intent, UserHandle.ALL);
                     break;
                 case 4:
                     intent.setClass(MainActivity.this, FragmentTest.class);

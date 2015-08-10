@@ -39,6 +39,7 @@ public class MyReceiver extends BroadcastReceiver {
         
         notification.setLatestEventInfo(context, title, null,
                 contentIntent);
-        notificationManager.notify(NOTIFICATION_ID, notification);        
+        notificationManager.notify(NOTIFICATION_ID, notification);
+        Toast.makeText(context, "My Receiver", Toast.LENGTH_LONG).show();
     }
 }

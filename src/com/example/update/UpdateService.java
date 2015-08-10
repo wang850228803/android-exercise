@@ -19,11 +19,11 @@ public class UpdateService extends Service {
     private int indexCount = 0;
     
     private int status;
-    public static int INIT_STATUS = 0;
-    public static int CHECKING_STATUS = 1;
-    public static int CHECK_FINISH_STATUS = 2;
-    public static int DOWNLOADING_STATUS = 3;
-    public static int DOWNLOAD_FINISH_STATUS = 4;
+    public static final int INIT_STATUS = 0;
+    public static final int CHECKING_STATUS = 1;
+    public static final int CHECK_FINISH_STATUS = 2;
+    public static final int DOWNLOADING_STATUS = 3;
+    public static final int DOWNLOAD_FINISH_STATUS = 4;
     
     private static final int MSG_CHECKING = 6;
     

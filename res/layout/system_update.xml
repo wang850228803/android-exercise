@@ -5,18 +5,25 @@
     android:orientation="vertical" >
     
     <TextView
-        android:name="@+id/text"
+        android:id="@+id/update_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:visibility="gone">
     </TextView>
         
-    
-    <ProgressBar android:name="@+id/progress"
+    <ProgressBar android:id="@+id/update_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
         android:visibility="gone">
     </ProgressBar>
+    
+    <Button android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone">
+    </Button>
 
 </LinearLayout>

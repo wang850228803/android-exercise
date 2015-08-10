@@ -14,14 +14,20 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.myapp.R;
 
 public class SystemUpdateActivity extends Activity {
+    
+    private static final int UPDATE_STATUS = 10;
+    private static final int UPDATE_PROGRESS = 11;
     private TextView textView;
     private ProgressBar pBar;
+    private Button cancleBtn;
     
     private ISystemUpdate mService;
     private WifiManager mWifiManager = null;
@@ -46,12 +52,31 @@ public class SystemUpdateActivity extends Activity {
         
     }
     
+    private Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            // TODO Auto-generated method stub
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case UPDATE_STATUS:
+                    updateStatusUI();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        
+    };
+    
     public class SystemUpdateListener extends ISystemUpdateListener.Stub {
         
         @Override
         public void updateUI(int status) throws RemoteException {
             // TODO Auto-generated method stub
-            updateStatusUI();
+            SystemUpdateActivity.this.status = status;
+            mHandler.sendEmptyMessage(UPDATE_STATUS);
         }
         
         @Override
@@ -100,12 +125,30 @@ public class SystemUpdateActivity extends Activity {
         super.onCreate(savedInstanceState);
         mContext = this;
         setContentView(R.layout.system_update);
-        textView = (TextView)findViewById(R.id.text);
-        pBar = (ProgressBar)findViewById(R.id.progress);
+        textView = (TextView)findViewById(R.id.update_text);
+        pBar = (ProgressBar)findViewById(R.id.update_progress);
+        cancleBtn = (Button)findViewById(R.id.cancel);
+        cancleBtn.setOnClickListener(listener);
         status = UpdateService.INIT_STATUS;
         mWifiManager = (WifiManager)getSystemService(WIFI_SERVICE);
         bindService(new Intent(this, UpdateService.class), conn, Context.BIND_AUTO_CREATE);
     }
+    
+    OnClickListener listener = new OnClickListener() {
+        
+        @Override
+        public void onClick(View v) {
+            // TODO Auto-generated method stub
+            switch (status) {
+                case UpdateService.CHECKING_STATUS:
+                    SystemUpdateActivity.this.finish();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onResume() {
@@ -115,8 +158,17 @@ public class SystemUpdateActivity extends Activity {
     }
     
     private void updateStatusUI() {
-        textView.setText(R.string.check_update);
-        textView.setVisibility(View.VISIBLE);
-        pBar.setVisibility(View.VISIBLE);
+        switch (status) {
+            case UpdateService.CHECKING_STATUS:
+                textView.setText(R.string.check_update);
+                textView.setVisibility(View.VISIBLE);
+                pBar.setVisibility(View.VISIBLE);
+                cancleBtn.setVisibility(View.VISIBLE);
+                break;
+
+            default:
+                break;
+        }
+
     }
 }

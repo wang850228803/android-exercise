@@ -337,8 +337,8 @@ public class MainActivity extends ListActivity{
                     break;
                 case 12:
                     WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
-                    //wifiManager.disconnect();
-                    wifiManager.disableNetwork(wifiManager.getConnectionInfo().getNetworkId());
+                    wifiManager.disconnect();
+                    //wifiManager.disableNetwork(wifiManager.getConnectionInfo().getNetworkId());
                     int test = Settings.Global.getInt(getContentResolver(), Settings.Global.AIRPLANE_MODE_ON,1);
                     Log.i("test", test+"");
                     int loc = Settings.Secure.getInt(getContentResolver(), Settings.Secure.LOCATION_MODE, 0);

@@ -28,6 +28,7 @@ public class SystemUpdateActivity extends Activity {
     private TextView textView;
     private ProgressBar pBar;
     private Button cancleBtn;
+    private Button okBtn;
     
     private ISystemUpdate mService;
     private WifiManager mWifiManager = null;
@@ -127,8 +128,11 @@ public class SystemUpdateActivity extends Activity {
         setContentView(R.layout.system_update);
         textView = (TextView)findViewById(R.id.update_text);
         pBar = (ProgressBar)findViewById(R.id.update_progress);
+        
         cancleBtn = (Button)findViewById(R.id.cancel);
         cancleBtn.setOnClickListener(listener);
+        okBtn = (Button)findViewById(R.id.ok);
+        okBtn.setOnClickListener(listener);
         status = UpdateService.INIT_STATUS;
         mWifiManager = (WifiManager)getSystemService(WIFI_SERVICE);
         bindService(new Intent(this, UpdateService.class), conn, Context.BIND_AUTO_CREATE);
@@ -139,11 +143,22 @@ public class SystemUpdateActivity extends Activity {
         @Override
         public void onClick(View v) {
             // TODO Auto-generated method stub
-            switch (status) {
-                case UpdateService.CHECKING_STATUS:
+            switch (v.getId()) {
+                case R.id.cancel:
                     SystemUpdateActivity.this.finish();
                     break;
-
+                case R.id.ok:
+                    if (status == UpdateService.CHECK_FINISH_NO_URL)
+                        SystemUpdateActivity.this.finish();
+                    else
+                        try {
+                            mService.startDownload();
+                        } catch (RemoteException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    break;
+                    
                 default:
                     break;
             }
@@ -164,6 +179,20 @@ public class SystemUpdateActivity extends Activity {
                 textView.setVisibility(View.VISIBLE);
                 pBar.setVisibility(View.VISIBLE);
                 cancleBtn.setVisibility(View.VISIBLE);
+                break;
+                
+            case UpdateService.CHECK_FINISH_NO_URL:
+                textView.setText(R.string.no_url);
+                pBar.setVisibility(View.INVISIBLE);
+                cancleBtn.setVisibility(View.INVISIBLE);
+                okBtn.setVisibility(View.VISIBLE);
+                break;
+             
+            case UpdateService.CHECK_FINISH_WITH_URL:
+                textView.setText(R.string.check_finish);
+                pBar.setVisibility(View.INVISIBLE);
+                cancleBtn.setVisibility(View.VISIBLE);
+                okBtn.setVisibility(View.VISIBLE);
                 break;
 
             default:

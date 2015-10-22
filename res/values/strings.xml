@@ -7,5 +7,7 @@
     <string name="check_update">start check the update</string>
     <string name="no_url">can not find the url.</string>
     <string name="check_finish">new image found, do you want to download now?</string>
+    <string name="downloading">downloading&#8230;</string>
+    <string name="download_finish">download finish</string>
 
 </resources>

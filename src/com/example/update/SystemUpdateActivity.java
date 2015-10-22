@@ -27,6 +27,7 @@ public class SystemUpdateActivity extends Activity {
     private static final int UPDATE_PROGRESS = 11;
     private TextView textView;
     private ProgressBar pBar;
+    private ProgressBar dBar;
     private Button cancleBtn;
     private Button okBtn;
     
@@ -81,9 +82,9 @@ public class SystemUpdateActivity extends Activity {
         }
         
         @Override
-        public void updateProgressBar() throws RemoteException {
+        public void updateProgressBar(int progress) throws RemoteException {
             // TODO Auto-generated method stub
-            
+            dBar.setProgress(progress);
         }
     };
 
@@ -128,6 +129,7 @@ public class SystemUpdateActivity extends Activity {
         setContentView(R.layout.system_update);
         textView = (TextView)findViewById(R.id.update_text);
         pBar = (ProgressBar)findViewById(R.id.update_progress);
+        dBar = (ProgressBar)findViewById(R.id.download_progress);
         
         cancleBtn = (Button)findViewById(R.id.cancel);
         cancleBtn.setOnClickListener(listener);
@@ -145,18 +147,24 @@ public class SystemUpdateActivity extends Activity {
             // TODO Auto-generated method stub
             switch (v.getId()) {
                 case R.id.cancel:
-                    SystemUpdateActivity.this.finish();
+                    if (status == UpdateService.CHECKING_STATUS)
+                        SystemUpdateActivity.this.finish();
+                    else if (status == UpdateService.DOWNLOADING_STATUS)
+                        //stop download...
                     break;
                 case R.id.ok:
                     if (status == UpdateService.CHECK_FINISH_NO_URL)
                         SystemUpdateActivity.this.finish();
-                    else
+                    else if (status == UpdateService.CHECK_FINISH_WITH_URL)
                         try {
                             mService.startDownload();
                         } catch (RemoteException e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
+                    else if (status == UpdateService.DOWNLOAD_FINISH_STATUS) {
+                        //do something
+                    }
                     break;
                     
                 default:
@@ -183,17 +191,28 @@ public class SystemUpdateActivity extends Activity {
                 
             case UpdateService.CHECK_FINISH_NO_URL:
                 textView.setText(R.string.no_url);
-                pBar.setVisibility(View.INVISIBLE);
-                cancleBtn.setVisibility(View.INVISIBLE);
+                pBar.setVisibility(View.GONE);
+                cancleBtn.setVisibility(View.GONE);
                 okBtn.setVisibility(View.VISIBLE);
                 break;
              
             case UpdateService.CHECK_FINISH_WITH_URL:
                 textView.setText(R.string.check_finish);
-                pBar.setVisibility(View.INVISIBLE);
+                pBar.setVisibility(View.GONE);
                 cancleBtn.setVisibility(View.VISIBLE);
                 okBtn.setVisibility(View.VISIBLE);
                 break;
+            case UpdateService.DOWNLOADING_STATUS:
+                textView.setText(R.string.downloading);
+                pBar.setVisibility(View.GONE);
+                dBar.setVisibility(View.VISIBLE);
+                okBtn.setVisibility(View.GONE);
+                break;
+            
+            case UpdateService.DOWNLOAD_FINISH_STATUS:
+                textView.setText(R.string.download_finish);
+                okBtn.setVisibility(View.VISIBLE);
+                cancleBtn.setVisibility(View.GONE);
 
             default:
                 break;

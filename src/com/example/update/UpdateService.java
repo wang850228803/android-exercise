@@ -9,6 +9,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.http.HttpEntity;
@@ -21,6 +22,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.integer;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Handler;
@@ -202,6 +204,7 @@ public class UpdateService extends Service {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+            image_url = "http://img.taopic.com/uploads/allimg/130331/240460-13033106143435.jpg";//just for test
             if (image_url == null) {
                 setStatus(CHECK_FINISH_NO_URL);
             } else {
@@ -213,24 +216,44 @@ public class UpdateService extends Service {
     private void downloadImage() {
         int bytesum = 0;
         int byteread = 0;
+        int sum = 209149; //图片大小, just for test
+        int progress = 0;
 
         try {
             URL url = new URL(image_url);
             URLConnection conn = url.openConnection();
             InputStream inStream = conn.getInputStream();
-            File file = new File("/data/data", "abc.gif");
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            FileOutputStream fs = new FileOutputStream("/data/data/abc.gif");
+            FileOutputStream fos = openFileOutput("abc.jpg", this.MODE_PRIVATE);
 
             byte[] buffer = new byte[1204];
             while ((byteread = inStream.read(buffer)) != -1) {
                 bytesum += byteread;
-                System.out.println(bytesum);
-                fs.write(buffer, 0, byteread);
+                fos.write(buffer, 0, byteread);
+                progress = bytesum * 100 / sum;
+                Iterator iterator = listenerMap.entrySet().iterator();
+                while (iterator.hasNext()) {
+                    Map.Entry entry = (Map.Entry)iterator.next();
+                    ISystemUpdateListener listener = (ISystemUpdateListener) entry.getValue();
+                    try {
+                        listener.updateProgressBar(progress);
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                    }
+                }
             }
-            fs.close();
+            fos.close();
+            Iterator iterator = listenerMap.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry entry = (Map.Entry)iterator.next();
+                ISystemUpdateListener listener = (ISystemUpdateListener) entry.getValue();
+                try {
+                    listener.updateUI(UpdateService.DOWNLOAD_FINISH_STATUS);
+                } catch (RemoteException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

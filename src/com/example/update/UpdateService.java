@@ -43,6 +43,7 @@ public class UpdateService extends Service {
     
     private static final int MSG_CHECKING = 6;
     private static final int MSG_DOWNLOADING = 7;
+    private static final int MSG_CANCEL_DOWNLOAD = 8;
     
     private int indexCount = 0;
     private static final String douban_url = "https://api.douban.com/v2/book/1220562";
@@ -100,6 +101,12 @@ public class UpdateService extends Service {
             // TODO Auto-generated method stub
             mWorkHandler.sendEmptyMessage(MSG_DOWNLOADING);
         }
+
+        @Override
+        public void cancelDownload() throws RemoteException {
+            // TODO Auto-generated method stub
+            mWorkHandler.sendEmptyMessage(MSG_CANCEL_DOWNLOAD);
+        }
         
     };
     
@@ -142,6 +149,9 @@ public class UpdateService extends Service {
                     case MSG_DOWNLOADING:
                         setStatus(DOWNLOADING_STATUS);
                         downloadImage();
+                        break;
+                    case MSG_CANCEL_DOWNLOAD:
+                        setStatus(INIT_STATUS);
                     default:
                         break;
                 }
@@ -227,6 +237,8 @@ public class UpdateService extends Service {
 
             byte[] buffer = new byte[1204];
             while ((byteread = inStream.read(buffer)) != -1) {
+                if (status == INIT_STATUS)
+                   break;
                 bytesum += byteread;
                 fos.write(buffer, 0, byteread);
                 progress = bytesum * 100 / sum;

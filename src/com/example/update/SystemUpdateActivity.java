@@ -149,8 +149,15 @@ public class SystemUpdateActivity extends Activity {
                 case R.id.cancel:
                     if (status == UpdateService.CHECKING_STATUS)
                         SystemUpdateActivity.this.finish();
-                    else if (status == UpdateService.DOWNLOADING_STATUS)
-                        //stop download...
+                    else if (status == UpdateService.DOWNLOADING_STATUS) {
+                        try {
+                            mService.cancelDownload();
+                        } catch (RemoteException e1) {
+                            // TODO Auto-generated catch block
+                            e1.printStackTrace();
+                        }
+                        SystemUpdateActivity.this.finish();
+                    }
                     break;
                 case R.id.ok:
                     if (status == UpdateService.CHECK_FINISH_NO_URL)

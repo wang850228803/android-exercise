@@ -5,4 +5,5 @@ interface ISystemUpdate {
 	int addListener(ISystemUpdateListener listener);
 	void removeListener(int index);
 	void startDownload();
+	void cancelDownload();
 }

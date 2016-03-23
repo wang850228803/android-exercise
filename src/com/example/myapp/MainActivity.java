@@ -1,6 +1,8 @@
 
 package com.example.myapp;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.ListActivity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -13,7 +15,6 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Message;
-import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +47,8 @@ public class MainActivity extends ListActivity{
 
     private static final int SEND_MESSAGE_TO_UITHREAD = 0;
     private static final int WAIT = 0;
+    
+    Handler myHandler = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +74,7 @@ public class MainActivity extends ListActivity{
         intentFilter.addAction("com.example.action.MY_RECEIVER");
         mContext.registerReceiver(mReceiver,intentFilter);*/
         Button test = (Button)findViewById(R.id.test);
-        test.setOnLongClickListener(new OnLongClickListener(){
+        test.setOnLongClickListener(new OnLongClickListener() {
 
             @Override
             public boolean onLongClick(View v) {
@@ -78,9 +82,10 @@ public class MainActivity extends ListActivity{
                 Toast.makeText(MainActivity.this, "test", Toast.LENGTH_LONG).show();
                 return false;
             }
-            
+
         });
         test.setClickable(false);
+        test.setText(getClass().getName());
         //test.setEnabled(false);
     }
 
@@ -191,7 +196,8 @@ public class MainActivity extends ListActivity{
 
     public class MyAdapter extends BaseAdapter{
         String[] array = {"calculate", "play music", "aidl test", "test receiver", "fragment test", "scrollview", 
-                "multitouch", "applist", "loader", "handler", "threadHandler", "handlerthread", "disableConnect","OTA"}; 
+                "multitouch", "applist", "loader", "handler", "threadHandler", "handlerthread", "disableConnect",
+                "OTA", "postdelayed", "stop postdelayed","popup","checkpopup"};
 
         @Override
         public int getCount() {
@@ -347,10 +353,48 @@ public class MainActivity extends ListActivity{
                 case 13:
                     startActivity(new Intent(MainActivity.this, SystemUpdateActivity.class));
                     break;
+                case 14:
+                    myHandler = new Handler();
+                    myHandler.postDelayed(runnable, 5000);
+                    break;
+                case 15:
+                    myHandler.removeCallbacks(runnable);
+                    break;
+                case 16:
+                    //Log.d("POPUP", ((ViewGroup) ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0)).getChildAt(0) + "");
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    //transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    MyFragment fragment = new MyFragment();
+                    transaction.add(android.R.id.content, fragment,"tag").addToBackStack(null).commit();
+                    Log.d("POPUP", getFragmentManager().findFragmentById(android.R.id.content) + "");
+                    Log.d("POPUP", getFragmentManager().findFragmentByTag("tag") + "");
+
+                    break;
+                case 17:
+                    Log.d("POPUP", getFragmentManager().findFragmentById(android.R.id.content) + "");
+                    Log.d("POPUP", getFragmentManager().findFragmentByTag("tag") + "");
                 default:
                     break;
             }
 
         }
+    
+    private Runnable runnable = new Runnable() {
         
+        @Override
+        public void run() {
+            // TODO Auto-generated method stub
+            Toast.makeText(mContext, "postdelay", Toast.LENGTH_LONG).show();
+        }
+    };
+
+    public static class MyFragment extends Fragment {
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View mContentView=inflater.inflate(R.layout.content_fragment, null);
+            ImageView mImage=(ImageView)mContentView.findViewById(R.id.image);
+            mImage.setImageResource(R.drawable.gallery_photo_1);
+            return mContentView;
+        }
+    }
 }

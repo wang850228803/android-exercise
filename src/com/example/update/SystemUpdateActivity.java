@@ -34,6 +34,7 @@ public class SystemUpdateActivity extends Activity {
     private ISystemUpdate mService;
     private WifiManager mWifiManager = null;
     private Context mContext;
+    private AppDeathRecipient dRecipient;
 
     private int status;
     
@@ -64,7 +65,9 @@ public class SystemUpdateActivity extends Activity {
                 case UPDATE_STATUS:
                     updateStatusUI();
                     break;
-
+                case UPDATE_PROGRESS:
+                    dBar.setProgress(msg.arg1);
+                    break;
                 default:
                     break;
             }
@@ -84,7 +87,10 @@ public class SystemUpdateActivity extends Activity {
         @Override
         public void updateProgressBar(int progress) throws RemoteException {
             // TODO Auto-generated method stub
-            dBar.setProgress(progress);
+            Message msg = new Message();
+            msg.what = UPDATE_PROGRESS;
+            msg.arg1 = progress;
+            mHandler.sendMessage(msg);
         }
     };
 
@@ -94,8 +100,13 @@ public class SystemUpdateActivity extends Activity {
         public void onServiceDisconnected(ComponentName name) {
             // TODO Auto-generated method stub
             try {
-                if(mService != null && listenerIndex != 0)
+                if(mService != null && listenerIndex != 0) {
                     mService.removeListener(listenerIndex);
+                    listenerIndex = 0;
+                    mService.asBinder().unlinkToDeath(dRecipient, 0);
+                    mService = null;
+                }
+                    
             } catch (RemoteException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -107,7 +118,7 @@ public class SystemUpdateActivity extends Activity {
         public void onServiceConnected(ComponentName name, IBinder service) {
             // TODO Auto-generated method stub
             mService = ISystemUpdate.Stub.asInterface(service);
-            AppDeathRecipient dRecipient = new AppDeathRecipient(mService.asBinder());
+            dRecipient = new AppDeathRecipient(mService.asBinder());
             try {
                 mService.asBinder().linkToDeath(dRecipient, 0);
                 listenerIndex = mService.addListener(new SystemUpdateListener());
@@ -137,7 +148,6 @@ public class SystemUpdateActivity extends Activity {
         okBtn.setOnClickListener(listener);
         status = UpdateService.INIT_STATUS;
         mWifiManager = (WifiManager)getSystemService(WIFI_SERVICE);
-        bindService(new Intent(this, UpdateService.class), conn, Context.BIND_AUTO_CREATE);
     }
     
     OnClickListener listener = new OnClickListener() {
@@ -184,9 +194,25 @@ public class SystemUpdateActivity extends Activity {
     public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-        
+        bindService(new Intent(this, UpdateService.class), conn, Context.BIND_AUTO_CREATE);
     }
     
+    @Override
+    protected void onPause() {
+        // TODO Auto-generated method stub
+        super.onPause();
+        mHandler.removeMessages(UPDATE_STATUS);
+        if (mService != null) {
+            unbindService(conn);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        // TODO Auto-generated method stub
+        super.onDestroy();
+    }
+
     private void updateStatusUI() {
         switch (status) {
             case UpdateService.CHECKING_STATUS:
@@ -220,6 +246,10 @@ public class SystemUpdateActivity extends Activity {
                 textView.setText(R.string.download_finish);
                 okBtn.setVisibility(View.VISIBLE);
                 cancleBtn.setVisibility(View.GONE);
+                break;
+                
+            case UpdateService.INIT_STATUS:
+                SystemUpdateActivity.this.finish();
 
             default:
                 break;

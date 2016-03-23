@@ -54,6 +54,9 @@ public class UpdateService extends Service {
     
     private ConcurrentHashMap<Integer, ISystemUpdateListener> listenerMap = new ConcurrentHashMap<Integer, ISystemUpdateListener>();
     private ConcurrentHashMap<Integer, AppDeathRecipient> deatHashMap = new ConcurrentHashMap<Integer, UpdateService.AppDeathRecipient>();
+    
+    private Object mLockHandler = new Object();
+    private Object mLockWorkThread = new Object();
 
     private final class AppDeathRecipient implements IBinder.DeathRecipient {
         IBinder mBinder = null;
@@ -67,9 +70,11 @@ public class UpdateService extends Service {
         @Override
         public void binderDied() {
             // TODO Auto-generated method stub
-            listenerMap.remove(index);
-            deatHashMap.remove(index);
-            mBinder.unlinkToDeath(AppDeathRecipient.this, 0);
+            synchronized (mLockHandler) {
+                listenerMap.remove(index);
+                deatHashMap.remove(index);
+                mBinder.unlinkToDeath(AppDeathRecipient.this, 0);
+            }
         }
         
     }
@@ -79,19 +84,24 @@ public class UpdateService extends Service {
         @Override
         public void removeListener(int index) throws RemoteException {
             // TODO Auto-generated method stub
-            listenerMap.remove(index);
-            deatHashMap.remove(index);
+            synchronized (mLockHandler) {
+                listenerMap.get(index).asBinder().unlinkToDeath(deatHashMap.get(index), 0);
+                listenerMap.remove(index);
+                deatHashMap.remove(index);
+            }
         }
         
         @Override
         public int addListener(ISystemUpdateListener listener) throws RemoteException {
             // TODO Auto-generated method stub
             if (listener != null) {
-                listenerMap.put(++indexCount, listener);
-                AppDeathRecipient recipient = new AppDeathRecipient(listener.asBinder(), indexCount);
-                listener.asBinder().linkToDeath(recipient, 0);
-                deatHashMap.put(indexCount, recipient);
-                return indexCount;
+                synchronized (mLockHandler) {
+                        listenerMap.put(++indexCount, listener);
+                        AppDeathRecipient recipient = new AppDeathRecipient(listener.asBinder(), indexCount);
+                        listener.asBinder().linkToDeath(recipient, 0);
+                        deatHashMap.put(indexCount, recipient);
+                        return indexCount;
+                }
             }
             return 0;
         }
@@ -115,6 +125,7 @@ public class UpdateService extends Service {
         // TODO Auto-generated method stub
         super.onCreate();
         status = INIT_STATUS;
+        startWorkThread();
     }
 
     @Override
@@ -126,40 +137,51 @@ public class UpdateService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // TODO Auto-generated method stub
-        startWorkThread();
         mWorkHandler.sendEmptyMessage(MSG_CHECKING);
         
         return super.onStartCommand(intent, flags, startId);
     }
     
     private void startWorkThread() {
-        mWorkThread = new HandlerThread("WorkThread");
-        mWorkThread.start();
-        mWorkHandler = new Handler(mWorkThread.getLooper()) {
+        synchronized (mLockWorkThread) {
+            mWorkThread = new HandlerThread("WorkThread");
+            mWorkThread.start();
+            mWorkHandler = new Handler(mWorkThread.getLooper()) {
 
-            @Override
-            public void handleMessage(Message msg) {
-                // TODO Auto-generated method stub
-                super.handleMessage(msg);
-                switch (msg.what) {
-                    case MSG_CHECKING:
-                        setStatus(CHECKING_STATUS);
-                        startChecking();
-                        break;
-                    case MSG_DOWNLOADING:
-                        setStatus(DOWNLOADING_STATUS);
-                        downloadImage();
-                        break;
-                    case MSG_CANCEL_DOWNLOAD:
-                        setStatus(INIT_STATUS);
-                    default:
-                        break;
+                @Override
+                public void handleMessage(Message msg) {
+                    // TODO Auto-generated method stub
+                    super.handleMessage(msg);
+                    switch (msg.what) {
+                        case MSG_CHECKING:
+                            setStatus(CHECKING_STATUS);
+                            startChecking();
+                            break;
+                        case MSG_DOWNLOADING:
+                            setStatus(DOWNLOADING_STATUS);
+                            downloadImage();
+                            break;
+                        case MSG_CANCEL_DOWNLOAD:
+                            setStatus(INIT_STATUS);
+                        default:
+                            break;
+                    }
                 }
-            }
-            
-        };
+                
+            };
+        }
     }
     
+    @Override
+    public void onDestroy() {
+        // TODO Auto-generated method stub
+        super.onDestroy();
+        status = INIT_STATUS;
+        if (mWorkThread != null && mWorkThread.isAlive())
+            mWorkThread.quit();
+        mWorkThread = null;
+    }
+
     private void setStatus(int status) {
         this.status = status;
         Iterator iterator = listenerMap.entrySet().iterator();
@@ -272,4 +294,5 @@ public class UpdateService extends Service {
             e.printStackTrace();
         }
     }
+    
 }

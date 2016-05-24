@@ -373,7 +373,7 @@ public class MainActivity extends ListActivity{
 
                     break;
                 case 17:
-                    startActivity(this, LaunchActivity.class);
+                    startActivity(new Intent(this, LaunchActivity.class));
                     break;
                 default:
                     break;

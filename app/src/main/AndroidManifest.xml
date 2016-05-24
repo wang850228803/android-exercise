@@ -49,6 +49,9 @@
         <activity android:name="com.example.advanced.MutilTouchDemoActivity" />
         <activity android:name=".ContactSampleListActivity" />
         <activity android:name=".LoaderThrottle" />
+        <activity android:name=".LaunchActivity"/>
+        <activity android:name=".LaunchActivity2"
+            android:launchMode="singleTask"/>
 
         <service android:name=".PlayService" />
         <service
@@ -77,8 +80,6 @@
             android:name="com.example.update.UpdateService"
             android:process=".updateService" />
 
-        <activity android:name=".LaunchActivity" />
-        <activity android:name=".LaunchActivity2"></activity>
     </application>
 
 </manifest>

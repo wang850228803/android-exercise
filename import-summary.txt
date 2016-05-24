@@ -1,0 +1,173 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .idea/
+* .idea/.name
+* .idea/compiler.xml
+* .idea/copyright/
+* .idea/copyright/profiles_settings.xml
+* .idea/misc.xml
+* .idea/modules.xml
+* .idea/vcs.xml
+* .idea/workspace.xml
+* README.md
+* abc.jpg
+* app/
+* app/build.gradle
+* app/lint.xml
+* app/src/
+* app/src/main/
+* app/src/main/AndroidManifest.xml
+* app/src/main/aidl/
+* app/src/main/aidl/com/
+* app/src/main/aidl/com/example/
+* app/src/main/aidl/com/example/advanced/
+* app/src/main/aidl/com/example/advanced/IDelay.aidl
+* app/src/main/aidl/com/example/advanced/IRemoteCallback.aidl
+* app/src/main/aidl/com/example/update/
+* app/src/main/aidl/com/example/update/ISystemUpdate.aidl
+* app/src/main/aidl/com/example/update/ISystemUpdateListener.aidl
+* app/src/main/java/
+* app/src/main/java/com/
+* app/src/main/java/com/example/
+* app/src/main/java/com/example/advanced/
+* app/src/main/java/com/example/advanced/AidlTest.java
+* app/src/main/java/com/example/advanced/ContentFraActivity.java
+* app/src/main/java/com/example/advanced/ContentFragment.java
+* app/src/main/java/com/example/advanced/Delay.java
+* app/src/main/java/com/example/advanced/FragmentTest.java
+* app/src/main/java/com/example/advanced/MainFragment.java
+* app/src/main/java/com/example/advanced/MutilTouchDemoActivity.java
+* app/src/main/java/com/example/advanced/MyScrollView.java
+* app/src/main/java/com/example/advanced/TestActivity.java
+* app/src/main/java/com/example/advanced/TouchImageView.java
+* app/src/main/java/com/example/myapp/
+* app/src/main/java/com/example/myapp/AppEntry.java
+* app/src/main/java/com/example/myapp/AppListAdapter.java
+* app/src/main/java/com/example/myapp/AppListFragment.java
+* app/src/main/java/com/example/myapp/AppListLoader.java
+* app/src/main/java/com/example/myapp/Calculate.java
+* app/src/main/java/com/example/myapp/ContactContentProvider.java
+* app/src/main/java/com/example/myapp/ContactSampleListActivity.java
+* app/src/main/java/com/example/myapp/InterestingConfigChanges.java
+* app/src/main/java/com/example/myapp/LoaderThrottle.java
+* app/src/main/java/com/example/myapp/MainActivity.java
+* app/src/main/java/com/example/myapp/MyContacts.java
+* app/src/main/java/com/example/myapp/MyReceiver.java
+* app/src/main/java/com/example/myapp/PackageIntentReceiver.java
+* app/src/main/java/com/example/myapp/PlayService.java
+* app/src/main/java/com/example/myapp/SimpleProvider.java
+* app/src/main/java/com/example/update/
+* app/src/main/java/com/example/update/SystemUpdateActivity.java
+* app/src/main/java/com/example/update/UpdateService.java
+* app/src/main/res/
+* app/src/main/res/drawable-hdpi/
+* app/src/main/res/drawable-hdpi/animal.bmp
+* app/src/main/res/drawable-hdpi/girl.bmp
+* app/src/main/res/drawable-hdpi/ic_launcher.png
+* app/src/main/res/drawable-hdpi/shortcut.bmp
+* app/src/main/res/drawable-mdpi/
+* app/src/main/res/drawable-mdpi/ic_launcher.png
+* app/src/main/res/drawable-xhdpi/
+* app/src/main/res/drawable-xhdpi/ic_launcher.png
+* app/src/main/res/drawable-xxhdpi/
+* app/src/main/res/drawable-xxhdpi/ic_launcher.png
+* app/src/main/res/drawable/
+* app/src/main/res/drawable/gallery_photo_1.jpg
+* app/src/main/res/drawable/gallery_photo_2.jpg
+* app/src/main/res/drawable/gallery_photo_3.jpg
+* app/src/main/res/drawable/gallery_photo_4.jpg
+* app/src/main/res/drawable/gallery_photo_5.jpg
+* app/src/main/res/drawable/wallpaper_01.jpg
+* app/src/main/res/drawable/wallpaper_10.jpg
+* app/src/main/res/layout/
+* app/src/main/res/layout/activity_calculate.xml
+* app/src/main/res/layout/activity_content.xml
+* app/src/main/res/layout/activity_fragment_test.xml
+* app/src/main/res/layout/activity_image.xml
+* app/src/main/res/layout/activity_list.xml
+* app/src/main/res/layout/activity_main.xml
+* app/src/main/res/layout/activity_test.xml
+* app/src/main/res/layout/activity_test_list.xml
+* app/src/main/res/layout/aidl_test_activity.xml
+* app/src/main/res/layout/contact_list.xml
+* app/src/main/res/layout/content_fragment.xml
+* app/src/main/res/layout/list_item_icon_text.xml
+* app/src/main/res/layout/system_update.xml
+* app/src/main/res/layout/zoom.xml
+* app/src/main/res/raw/
+* app/src/main/res/raw/gequ.mp3
+* app/src/main/res/values/
+* app/src/main/res/values/dimens.xml
+* app/src/main/res/values/strings.xml
+* build.gradle
+* gradle/
+* gradle/wrapper/
+* gradle/wrapper/gradle-wrapper.jar
+* gradle/wrapper/gradle-wrapper.properties
+* gradlew
+* gradlew.bat
+* ic_launcher-web.png
+* proguard-project.txt
+* settings.gradle
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:19.1.0
+
+Replaced Libraries with Dependencies:
+-------------------------------------
+The importer recognized the following library projects as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the source files in your project were of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the library replacement in the import wizard and try
+again:
+
+appcompat-v7 => [com.android.support:appcompat-v7:19.1.0]
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app/src/main/AndroidManifest.xml
+* assets/ => app/src/main/assets
+* lint.xml => app/lint.xml
+* res/ => app/src/main/res/
+* src/ => app/src/main/java/
+* src/com/example/advanced/IDelay.aidl => app/src/main/aidl/com/example/advanced/IDelay.aidl
+* src/com/example/advanced/IRemoteCallback.aidl => app/src/main/aidl/com/example/advanced/IRemoteCallback.aidl
+* src/com/example/update/ISystemUpdate.aidl => app/src/main/aidl/com/example/update/ISystemUpdate.aidl
+* src/com/example/update/ISystemUpdateListener.aidl => app/src/main/aidl/com/example/update/ISystemUpdateListener.aidl
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

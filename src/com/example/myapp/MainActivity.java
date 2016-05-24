@@ -74,6 +74,7 @@ public class MainActivity extends ListActivity{
         intentFilter.addAction("com.example.action.MY_RECEIVER");
         mContext.registerReceiver(mReceiver,intentFilter);*/
         Button test = (Button)findViewById(R.id.test);
+        EditText edit = (EditText)findViewById(R.id.edit);
         test.setOnLongClickListener(new OnLongClickListener() {
 
             @Override

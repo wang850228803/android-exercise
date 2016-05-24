@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.myapp"
+    android:versionCode="1"
+    android:versionName="1.0">
+
+    <uses-sdk
+        android:minSdkVersion="17"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="test.permission" />
+    <!-- 调用wifiManager.disconnect()所需要的权限 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <permission android:name="test.permission" />
+
+    <android:uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.example.myapp1" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Calculate" />
+        <activity android:name="com.example.advanced.AidlTest" />
+        <activity android:name="com.example.advanced.FragmentTest" />
+        <activity android:name="com.example.advanced.ContentFraActivity" />
+        <activity android:name="com.example.advanced.TestActivity" />
+        <activity android:name="com.example.advanced.MutilTouchDemoActivity" />
+        <activity android:name=".ContactSampleListActivity" />
+        <activity android:name=".LoaderThrottle" />
+
+        <service android:name=".PlayService" />
+        <service
+            android:name="com.example.advanced.Delay"
+            android:process="com.example.service">
+            <intent-filter>
+                <action android:name="com.example.myapp2.IDelay" />
+            </intent-filter>
+        </service>
+
+        <receiver android:name=".MyReceiver">
+            <intent-filter>
+                <action android:name="com.example.action.MY_RECEIVER" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name=".SimpleProvider"
+            android:authorities="com.example.android.apis.app.test" />
+
+        <activity android:name="com.example.update.SystemUpdateActivity" />
+
+        <service
+            android:name="com.example.update.UpdateService"
+            android:process=".updateService" />
+
+        <activity android:name=".LaunchActivity" />
+        <activity android:name=".LaunchActivity2"></activity>
+    </application>
+
+</manifest>

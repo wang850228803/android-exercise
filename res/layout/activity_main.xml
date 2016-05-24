@@ -8,17 +8,28 @@
              android:layout_width="match_parent"
      android:layout_height="wrap_content"
      android:text="test"/>
- <ListView
-     android:id="@id/android:list"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     ></ListView>
+
+	<EditText
+		android:id="@id/edit"
+		android:layout_width="match_parent"
+		android:layout_height="50dp"
+		/>
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="text" />
+
+	<ListView
+		 android:id="@id/android:list"
+		 android:layout_width="match_parent"
+		 android:layout_height="wrap_content"
+		 ></ListView>
  
- <TextView 
-	android:id="@id/android:empty" 
-	android:layout_width="match_parent"
-	android:layout_height="match_parent" 
-	android:text="No data" 
-	android:gravity="center_vertical|center_horizontal" />
+	 <TextView
+		android:id="@id/android:empty"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:text="No data"
+		android:gravity="center_vertical|center_horizontal" />
 
 </LinearLayout>

@@ -22,6 +22,8 @@ public class Calculate extends Activity implements OnClickListener {
     private Button dBtn;
     private EditText eText;
     private Button equal;
+
+    private ListView list;
     
     static final String ACTION="com.example.action.MY_RECEIVER";
     
@@ -29,7 +31,8 @@ public class Calculate extends Activity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculate);
-        
+
+        list = (ListView)findVIewById(R.id.list);
         eText=(EditText)findViewById(R.id.etext);
         pBtn=(Button)findViewById(R.id.plus);
         pBtn.setOnClickListener(this);

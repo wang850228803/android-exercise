@@ -4,7 +4,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0'
+        classpath 'com.android.tools.build:gradle:2.1.0'
         /*androidTestCompile 'com.android.support.test:runner:0.4'
         // Set this dependency to use JUnit 4 rules
         androidTestCompile 'com.android.support.test:rules:0.4'

@@ -25,5 +25,19 @@ public class LaunchActivity extends Activity {
                 startActivity(new Intent(ctx, LaunchActivity2.class));
             }
         });
+        Button but2 = (Button) findViewById(R.id.button2);
+        but2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ctx, LaunchActivity.class));
+            }
+        });
+        Button but3 = (Button) findViewById(R.id.button3);
+        but3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent("com.example.testLaunch"));
+            }
+        });
     }
 }

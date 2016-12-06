@@ -24,11 +24,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.advanced.AidlTest;
+import com.example.advanced.ContentFragment;
 import com.example.advanced.FragmentTest;
 import com.example.advanced.MutilTouchDemoActivity;
 import com.example.advanced.TestActivity;
@@ -87,9 +89,30 @@ public class MainActivity extends ListActivity{
         test.setClickable(false);
         test.setText(getClass().getName());
         //test.setEnabled(false);
+
+        ContentFragment fragment = new ContentFragment();
+        getFragmentManager().beginTransaction().add(android.R.id.content, fragment).addToBackStack(null).commit();
+        getFragmentManager().executePendingTransactions();
+
+        /*try {
+            getFragmentManager().popBackStack();
+            getFragmentManager().popBackStackImmediate();
+        } catch (Exception e) {
+            Log.i(this + "", "enter catch");
+            getFragmentManager().beginTransaction().remove(fragment).commit();
+            getFragmentManager().executePendingTransactions();
+        }
+
+        Log.i(this + "", getFragmentManager().findFragmentById(android.R.id.content)+"");*/
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Fragment fragment1 = getFragmentManager().findFragmentById(android.R.id.content);
+        LinearLayout layout = (LinearLayout) fragment1.getView();
+        layout.getChildAt(0).performClick();
+    }
 
     @Override
     protected void onStart() {
@@ -195,9 +218,10 @@ public class MainActivity extends ListActivity{
     };
 
     public class MyAdapter extends BaseAdapter{
-        String[] array = {"calculate", "play music", "aidl test", "test receiver", "fragment test", "scrollview", 
-                "multitouch", "applist", "loader", "handler", "threadHandler", "handlerthread", "disableConnect",
-                "OTA", "postdelayed", "stop postdelayed","popup","launch_mode"};
+        String[] array = {"calculate", "play music", "aidl test", "test receiver", "fragment test",
+                "scrollview", "multitouch", "applist", "loader", "handler",
+                "threadHandler", "handlerthread", "disableConnect", "OTA", "postdelayed",
+                "stop postdelayed","popup","launch_mode","fragment_lifecycle"};
 
         @Override
         public int getCount() {
@@ -230,14 +254,21 @@ public class MainActivity extends ListActivity{
             LayoutInflater mInfater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             if (convertView == null) {
                 mViewHolder = new ViewHolder();
-                view = mInfater.inflate(android.R.layout.simple_list_item_1, null);//第二个参数为null
-                mViewHolder.text = (TextView)view.findViewById(android.R.id.text1);
+                if (position == 1 || position == 2 || position == 3) {
+                    view = mInfater.inflate(android.R.layout.simple_list_item_1, null);//第二个参数为null
+                    mViewHolder.text = (TextView) view.findViewById(android.R.id.text1);
+                }
+                else {
+                    view = mInfater.inflate(R.layout.color_item, null);
+                    mViewHolder.text = (TextView)view.findViewById(R.id.text1);
+                }
                 view.setTag(mViewHolder);
             } else {
                 view = convertView;
                 mViewHolder = (ViewHolder)view.getTag();
             }
             mViewHolder.text.setText(array[position]);
+           // Toast.makeText(MainActivity.this, "show view at:" + position, Toast.LENGTH_SHORT).show();
             return view;
         }
         
@@ -375,12 +406,15 @@ public class MainActivity extends ListActivity{
                 case 17:
                     startActivity(new Intent(this, LaunchActivity.class));
                     break;
+                case 18:
+                    break;
                 default:
                     break;
             }
 
         }
-    
+
+
     private Runnable runnable = new Runnable() {
         
         @Override

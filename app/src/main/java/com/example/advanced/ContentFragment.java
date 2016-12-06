@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.myapp.R;
 
@@ -22,6 +23,12 @@ public class ContentFragment extends Fragment {
         // TODO Auto-generated method stub
         mContentView=inflater.inflate(R.layout.content_fragment, null);
         mImage=(ImageView)mContentView.findViewById(R.id.image);
+        mImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "-------------test---------", Toast.LENGTH_SHORT).show();
+            }
+        });
         return mContentView;
     }
 

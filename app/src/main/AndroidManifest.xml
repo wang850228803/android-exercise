@@ -19,9 +19,9 @@
 
     <permission android:name="test.permission" />
 
-    <android:uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -49,9 +49,19 @@
         <activity android:name="com.example.advanced.MutilTouchDemoActivity" />
         <activity android:name=".ContactSampleListActivity" />
         <activity android:name=".LoaderThrottle" />
-        <activity android:name=".LaunchActivity"/>
+        <activity android:name=".LaunchActivity">
+            <intent-filter>
+                <action android:name="com.example.myapp.launcher"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".LaunchActivity2"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="com.example.myapp.launcher2"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <service android:name=".PlayService" />
         <service

@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.example.advanced.AidlTest;
 import com.example.advanced.ContentFragment;
+import com.example.advanced.FragmentLifecycle;
 import com.example.advanced.FragmentTest;
 import com.example.advanced.MutilTouchDemoActivity;
 import com.example.advanced.TestActivity;
@@ -279,7 +280,7 @@ public class MainActivity extends ListActivity{
         // TODO Auto-generated method stub
             // TODO Auto-generated method stub
             switch (position) {
-                case 0:
+                case 0://计算器
                     intent.setClass(MainActivity.this, Calculate.class);
                     startActivity(intent);
                     break;
@@ -295,11 +296,11 @@ public class MainActivity extends ListActivity{
                         onStop();
                     }
                     break;
-                case 2:
+                case 2://aidl
                     intent.setClass(MainActivity.this, AidlTest.class);
                     startActivity(intent);
                     break;
-                case 3:
+                case 3://receiver
                     intent.setAction("com.example.action.MY_RECEIVER");
                     //sendBroadcast(intent,"test.permission");
                     //sendBroadcast(intent,android.Manifest.permission.WRITE_SECURE_SETTINGS);
@@ -406,7 +407,8 @@ public class MainActivity extends ListActivity{
                 case 17:
                     startActivity(new Intent(this, LaunchActivity.class));
                     break;
-                case 18:
+                case 18://fragmentmanager attach
+                    startActivity(new Intent(this, FragmentLifecycle.class));
                     break;
                 default:
                     break;

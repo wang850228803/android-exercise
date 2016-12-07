@@ -51,14 +51,17 @@
         <activity android:name=".LoaderThrottle" />
         <activity android:name=".LaunchActivity">
             <intent-filter>
-                <action android:name="com.example.myapp.launcher"/>
+                <action android:name="com.example.myapp.launcher" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".LaunchActivity2"
+        <activity
+            android:name=".LaunchActivity2"
             android:launchMode="singleTask">
             <intent-filter>
-                <action android:name="com.example.myapp.launcher2"/>
+                <action android:name="com.example.myapp.launcher2" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -90,6 +93,7 @@
             android:name="com.example.update.UpdateService"
             android:process=".updateService" />
 
+        <activity android:name="com.example.advanced.FragmentLifecycle" />
     </application>
 
 </manifest>
